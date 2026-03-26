@@ -1,6 +1,2 @@
 flask
-numpy 
-matplotlib
-sys
-math 
-scipy
+numpy
