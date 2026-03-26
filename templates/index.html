@@ -1,0 +1,157 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Interpolator</title>
+    <style>
+        body {
+            background-color: #84a1ef;
+            font-family: Arial, sans-serif;
+            color: black;
+        }
+        .container {
+            width: 600px;
+            margin: 40px auto;
+            background: #f8f4a1;
+            padding: 20px;
+            border-radius: 8px;
+        }
+        label {
+            display: block;
+            margin-top: 12px;
+            font-weight: bold;
+            color: black;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 6px;
+            margin-top: 4px;
+        }
+        .checkbox {
+            margin-top: 10px;
+            color: black;
+        }
+        button {
+            margin-top: 20px;
+            padding: 10px;
+            width: 100%;
+            background: #0f172a;
+            color: white;
+            border: none;
+            cursor: pointer;
+        } 
+        .modal {
+        display: none;
+        position: fixed;
+        z-index: 1000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0,0,0,0.5);
+        }
+
+        .modal-content {
+        background-color: white;
+        margin: 8% auto;
+        padding: 20px;
+        width: 70%;
+        max-height: 80%;
+        overflow-y: auto;
+        border-radius: 6px;
+        }
+
+        .close {
+        float: right;
+        font-size: 28px;
+        cursor: pointer;
+        } 
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Interpolator</h2>
+    
+    <button onclick="openReadme()">Show README</button>
+    <div id="readmeModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeReadme()">&times;</span>
+        <h2>README</h2>
+        <pre id="readmeContent"></pre>
+    </div>
+    </div>
+        
+    <script>
+    function openReadme() {
+    fetch("/readme")
+        .then(response => response.text())
+        .then(text => {
+        document.getElementById("readmeContent").textContent = text;
+        document.getElementById("readmeModal").style.display = "block";
+        })
+        .catch(err => console.error(err));
+    }
+
+    function closeReadme() {
+    document.getElementById("readmeModal").style.display = "none";
+    }
+    </script>
+
+
+    <form method="post" autocomplete="on" target="_self">
+        {% if error %}
+        <p style="color:red">{{error}}</p>
+        {% endif %}                        
+
+        <label>Views</label>
+        <input type="text" name="view" value ="{{ view or ''}}">
+
+        <label>Dyadic estimates</label>
+        <input type="text" name="dyadic_estimates_initial" value ="{{dyadic_estimates_initial or ''}}">
+
+        <label>Lebesgue estimates</label>
+        <input type="text" name="ss_estimates_initial" value ="{{ss_estimates_initial or ''}}">
+
+        <label>Weak-Strong estimates</label>
+        <input type="text" name="ws_estimates_initial" value ="{{ws_estimates_initial or ''}}">
+
+        <label>Strong-Weak estimates</label>
+        <input type="text" name="sw_estimates_initial" value ="{{sw_estimates_initial or ''}}">
+
+        <label>Weak-type estimates</label>
+        <input type="text" name="ww_estimates_initial" value ="{{ww_estimates_initial or ''}}">
+
+        <label>List of d-parameters</label>
+        <input type="text" name="d_list" value ="{{d_list or ''}}">
+
+        <div class="checkbox">
+            <input type="checkbox" name="symmetric" {% if symmetric %}checked{% endif %}> symmetric
+        </div>
+        <div class="checkbox">
+            <input type="checkbox" name="X_finite_measure" {% if X_finite_measure %}checked{% endif %}> X of finite measure
+        </div>
+        <div class="checkbox">
+            <input type="checkbox" name="Y_finite_measure" {% if Y_finite_measure %}checked{% endif %}> Y of finite measure
+        </div>
+
+        <!-- <label>Project name</label>
+        <input type="text" name="files" value ="{{files or ''}}"> -->
+        
+        <button type="submit" name="action" value="run">Run</button>
+        <!-- <button type = "submit" name="action" value="show_pdf" formtarget="blank">Show PDF</button> -->
+        <!-- <a href="/show_pdf" target="_blank" class="btn">Zeige PDF  </a>     -->
+        <!-- <button type="submit" formmethod="get" formaction="/show_pdf" formtarget="_blank">Show PDF</button> -->
+    </form>
+    
+    <!-- <form  method = "get" action ="show_pdf" target ="_blank>
+        <button type="submit" name="action" value="show_pdf">Show PDF</button>
+    </form>  -->
+
+    
+</div>
+
+</body>
+</html>
