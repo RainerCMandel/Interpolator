@@ -1,7 +1,5 @@
 flask
-numpy
-logging
-textwrap
+numpy 
 matplotlib
 sys
 math 
