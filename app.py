@@ -20,6 +20,7 @@ logging.basicConfig(
    )
 log = logging.getLogger(__name__)  
 
+
 def translate_inputvariables(input_variables):
     # Extract each single input variable
     view=input_variables[0]
@@ -398,7 +399,8 @@ def index():
                             Y_finite_measure = Y_finite_measure)
      
     return render_template("index.html",error = error_text)
-app.run()
+
+app.run(host="0.0.0.0", port=10000)
 
 ## [0.3,0.3,-1],[0.4,0.8,-3],[0,0.4,2]
      
