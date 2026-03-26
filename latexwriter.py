@@ -143,20 +143,20 @@ def latexsymbolic(expr):
         num = expr.numerator 
         if num>=0:
             if den==1:
-                return str(num).replace("*"," \cdot ")            
+                return str(num).replace("*",r""" \cdot """)            
             else:
                 return r"""\frac{"""+latexsymbolic(num)+r"""}{"""+latexsymbolic(den)+r"""}"""          
         else:
             if den==1:                
-                return "-"+str(-num).replace("*"," \cdot ")    
+                return "-"+str(-num).replace("*",r""" \cdot """)    
             else:                
                 return "-"+r"""\frac{"""+latexsymbolic(-num)+r"""}{"""+latexsymbolic(den)+r"""}"""          
     elif isinstance(expr, sp.Basic):        
         num, den = expr.as_numer_denom()
         if den==1:
-            return str(num).replace("*"," \cdot ")    
+            return str(num).replace("*",r""" \cdot """)    
         elif den==-1:    
-            return "-"+str(-num).replace("*"," \cdot ")    
+            return "-"+str(-num).replace("*",r""" \cdot """)    
         else:          
             return r"""\frac{"""+latexsymbolic(num)+r"""}{"""+latexsymbolic(den)+r"""}"""    
     elif isinstance(expr,list) or isinstance(expr,tuple):     
