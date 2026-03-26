@@ -67,7 +67,7 @@ def check_sw_estimates(estimates,dlist):
         for D in dlist:            
             estimates_d = gen.plugin(D,estimates)            
             if any([est[1]==0 for est in estimates_d]):
-                log.error("Please label the estimate into L^{\infty,\infty} as estimate into L^\infty.")
+                log.error("""Please label the estimate into L^{\infty,\infty} as estimate into L^\infty.""")
                 return False
         return True
     except:
