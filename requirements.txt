@@ -4,4 +4,5 @@ logging
 textwrap
 matplotlib
 sys
-math scipy
+math 
+scipy
