@@ -1,0 +1,7 @@
+flask
+numpy
+logging
+textwrap
+matplotlib
+sys
+math scipy
