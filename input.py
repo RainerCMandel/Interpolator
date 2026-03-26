@@ -1,7 +1,7 @@
 import general as gen
 from pathlib import Path
 import logging 
-log = logging.getLogger("app")  
+log = logging.getLogger(__name__)  
 
 
 def check_view(view):
