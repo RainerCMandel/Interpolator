@@ -8,7 +8,7 @@ from pathlib import Path
 import latexwriter
 import general as gen
 
-log = logging.getLogger("app")
+log = logging.getLogger(__name__)
 scriptdir = Path(__file__).resolve().parent
 
 
