@@ -78,8 +78,7 @@ def main(input_variables):
       
    view = input_variables[0]
    d_list = input_variables[6]
-   selfadjoint = input_variables[7] 
-   files = "Interpolator"
+   selfadjoint = input_variables[7]    
    d = sp.symbols('d')
         
    mapping = {
@@ -121,9 +120,6 @@ def main(input_variables):
    print("\n Program finished succesfully! \n")
    log.info("Program finished succesfully!") 
    log.info("################################################################") 
-   
-   ## TODO Hover the point in the picture --> Indicate which estimate is valid there
-   ## TODO Ungleichung in Reihenfolge anzeigen
 
    return
 
