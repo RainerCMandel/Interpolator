@@ -80,7 +80,7 @@ def check_ws_estimates(estimates,dlist):
         for D in dlist:            
             estimates_d = gen.plugin(D,estimates)            
             if any([est[0]==0 for est in estimates_d]):
-                log.error("Please label the estimate from L^{1,1} as estimate from L^1.")
+                log.error(r"""Please label the estimate from L^{1,1} as estimate from L^1.""")
                 return False
         return True
     except:
@@ -93,10 +93,10 @@ def check_ww_estimates(estimates,dlist):
         for D in dlist:            
             estimates_d = gen.plugin(D,estimates)            
             if any([est[1]==0 for est in estimates_d]):
-                log.error("Please label the estimate into L^{\infty,\infty} as estimate into L^\infty.")
+                log.error(r"""Please label the estimate into L^{\infty,\infty} as estimate into L^\infty.""")
                 return False
             if any([est[0]==0 for est in estimates_d]):
-                log.error("Please label the estimate from L^{1,1} as estimate from L^1.")
+                log.error(r"""Please label the estimate from L^{1,1} as estimate from L^1.""")
                 return False
         return True
     except:
