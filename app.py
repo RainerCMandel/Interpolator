@@ -12,10 +12,9 @@ scriptdir = Path(__file__).resolve().parent
 app = Flask(__name__)
 app.secret_key = "super_secret_key"
 logging.basicConfig(
-      filename= scriptdir / "interpolator.log",
+      # filename= scriptdir / "interpolator.log",
       filemode="w",
-      level=logging.INFO,
-      # Es gibt: DEBUG, INFO, WARNING, ERROR, CRITICAL
+      level=logging.INFO,  # options: DEBUG, INFO, WARNING, ERROR, CRITICAL
       format="%(asctime)s - %(levelname)s - %(module)s:%(lineno)d - %(funcName)s() - %(name)s - %(message)s"
    )
 log = logging.getLogger(__name__)  
@@ -58,16 +57,7 @@ def translate_inputvariables(input_variables):
         new_d_list = d_list
         log.warning("Input for d_list is not valid. Please correct this.")
     #print(new_d_list)
-    
-    
-    
-    if files is None or files.lstrip("[']").rstrip("']").replace(" ","")=="":
-        new_files = "dummy"
-        log.warning("No input for 'files'. We proceed with files='dummy'.")
-    else:
-        new_files = files.lstrip("[']").rstrip("']").replace(" ","")
-    #print(new_files)
-         
+             
     #print(dyadic_estimates_initial)
     try:
         if dyadic_estimates_initial is None or dyadic_estimates_initial.lstrip("[']").rstrip("']").replace(" ","")=="":
@@ -127,8 +117,7 @@ def translate_inputvariables(input_variables):
         new_sw_estimates_initial,
         new_ww_estimates_initial,
         new_d_list,
-        symmetric,
-        new_files,
+        symmetric, 
         X_finite_measure,
         Y_finite_measure    
     ]
@@ -332,30 +321,18 @@ def index():
         ]              
         files = "interpolator"
                       
-        try:            
-            #new_input_variables = translate_inputvariables(input_variables)
-
-            #print(str(input_variables))
-            #print("1st errortext = " + error_text)
+        try:          
             log.info("Work with the input = "+gen.toString(input_variables))
-            (cleared_input_variables,err_text) = clear_inputvariables(input_variables)                        
-            #print(cleared_input_variables)
-            log.info("After input clearing the input reads = "+gen.toString(cleared_input_variables))
-            #print("2nd errortext = " + error_text)
+            (cleared_input_variables,err_text) = clear_inputvariables(input_variables)                                    
+            log.info("After input clearing the input reads = "+gen.toString(cleared_input_variables)) 
             error_text += err_text
-            new_input_variables = default_inputvariables(cleared_input_variables)                                    
-            #print(new_input_variables)
-            log.info("After inserting default values if necessary the input reads = "+gen.toString(new_input_variables))
-            #print("3rd errortext = " + error_text)
-            error_text += inp.check(new_input_variables)             
-            #print("4th errortext = " + error_text)             
+            new_input_variables = default_inputvariables(cleared_input_variables)                      
+            log.info("After inserting default values if necessary the input reads = "+gen.toString(new_input_variables)) 
+            error_text += inp.check(new_input_variables)              
             
-            if error_text != "":
-                #print("B")
+            if error_text != "": 
                 log.info("Input error: no computation started.")                
                 log.info("Error text = "+error_text)   
-                #print(cleared_input_variables[2])
-                #print(gen.toString(cleared_input_variables[2])[1:-1].replace(" ",""))
                 return render_template("index.html", 
                                        error = error_text,
                                        view = cleared_input_variables[0][1:-1].replace(" ",""),
@@ -373,15 +350,13 @@ def index():
                 log.info("### Main method is started.")    
                 main.main(new_input_variables)
                 log.info("### Main method has been left.")                                     
-                log.info("The pdf file will be written to " + files + "/" + files+".pdf") 
                 error_text = ""               
-                return send_file(files + "/" + files+".pdf",mimetype="application/pdf",as_attachment=False)                            
+                return send_file("interpolator.pdf",mimetype="application/pdf",as_attachment=False)                            
             except Exception:                
                 error_text +=  "Error while executing the main method." 
                 log.exception("Error while executing the main method.")
                 raise
-        except:         
-            #print("E")                   
+        except:                         
             error_text += "Input error: no computation started."
             log.exception("Input error: no computation started.")
                                          
@@ -401,6 +376,4 @@ def index():
     return render_template("index.html",error = error_text)
 
 app.run(host="0.0.0.0", port=10000)
-
-## [0.3,0.3,-1],[0.4,0.8,-3],[0,0.4,2]
      
